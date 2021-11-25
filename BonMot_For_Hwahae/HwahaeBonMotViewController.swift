@@ -1,5 +1,5 @@
 //
-//  StyleViewController.swift
+//  HwahaeBonMotViewController.swift
 //  BonMot
 //
 //  Created by Brian King on 8/26/16.
@@ -19,7 +19,7 @@ class BaseTableViewCell: UITableViewCell {
 
 class HwahaeBonMotViewController: UITableViewController {
     var styles: [(String, [NSAttributedString])] = [
-        ("Simple Use Case", [DemoStrings.simpleExample]),
+        ("Basic", [DemoStrings.simpleExample]),
         ("XML", [
             DemoStrings.xmlExample,
             DemoStrings.xmlWithEmphasis,
@@ -52,13 +52,13 @@ class HwahaeBonMotViewController: UITableViewController {
         }
         let attributedText = styles[indexPath.section].1[indexPath.row]
         cell.titleLabel?.attributedText = attributedText.adapted(to: traitCollection)
-        cell.accessoryType = attributedText.attribute("Storyboard", at: 0, effectiveRange: nil) == nil ? .none : .disclosureIndicator
+        cell.accessoryType = attributedText.attribute(NSAttributedString.Key(rawValue: "Storyboard"), at: 0, effectiveRange: nil) == nil ? .none : .disclosureIndicator
         return cell
     }
 
     override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         let attributedText = styles[indexPath.section].1[indexPath.row]
-        if attributedText.attribute("Storyboard", at: 0, effectiveRange: nil) is String {
+        if attributedText.attribute(NSAttributedString.Key(rawValue: "Storyboard"), at: 0, effectiveRange: nil) is String {
             return true
         }
         return false
@@ -66,7 +66,7 @@ class HwahaeBonMotViewController: UITableViewController {
 
     func selectRow(at indexPath: IndexPath) {
         let attributedText = styles[indexPath.section].1[indexPath.row]
-        if let storyboardIdentifier = attributedText.attribute("Storyboard", at: 0, effectiveRange: nil) as? String {
+        if let storyboardIdentifier = attributedText.attribute(NSAttributedString.Key(rawValue: "Storyboard"), at: 0, effectiveRange: nil) as? String {
             guard let nextVC = storyboard?.instantiateViewController(withIdentifier: storyboardIdentifier) else {
                 fatalError("No Storyboard identifier \(storyboardIdentifier)")
             }
